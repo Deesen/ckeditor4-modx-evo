@@ -473,6 +473,26 @@ class modxRTEbridge
 
         return is_array( $option ) ? implode("\n",$option) : '<!-- '. $this->editorKey .': No skins found -->';
     }
+    
+    public function lang($key='')
+    {
+        global $modx;
+        
+        if(!$key) return;
+        
+        $lang_name = $modx->config['manager_language'];
+        $lang_path = $this->pluginParams['base_path'] . "lang/{$lang_name}.inc.php";
+        
+        if(is_file($lang_path)) include_once($lang_path);
+        
+        if(isset($_lang[$key])) return $_lang[$key];
+        else {
+            include_once($this->pluginParams['base_path'] . 'lang/english.inc.php');
+            if(isset($_lang[$key])) return $_lang[$key];
+            else                    return '';
+        }
+    }
+    
     public function selected($cond = false)
     {
         if($cond !== false) return ' selected="selected"';
