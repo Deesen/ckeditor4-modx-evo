@@ -178,7 +178,7 @@ class modxRTEbridge
         foreach($params['elements'] as $id)
         {
             $initTpl = file_get_contents("{$params['base_path']}tpl/tpl.{$this->editorKey}.init.html");
-            $tpl .= $modx->parseText($initTpl,array('id'=>$id));
+            $tpl .= $modx->parseText($initTpl,array('id'=>$id,'configKey'=>$this->theme));
         };
 
         return $modx->parseText($tpl,$ph);
