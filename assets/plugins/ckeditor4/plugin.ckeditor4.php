@@ -1,14 +1,20 @@
 //<?php
-/*
- * CKEditor4 for Modx Evolution
+/**
+ * CKEditor4 for MODX Evolution
+ * 
+ * Javascript rich text editor
  *
- * Latest Updates / Issues on Github:
- * https://github.com/Deesen/ckeditor4-modx-evo
+ * @category    plugin
+ * @version     4.5.7.0
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
+ * @internal    @properties &width=Width;text;100%
+ * @internal    @events OnRichTextEditorRegister,OnRichTextEditorInit,OnInterfaceSettingsRender 
+ * @internal    @modx_category Manager and Admin
  *
- * @events: OnRichTextEditorRegister, OnRichTextEditorInit, OnInterfaceSettingsRender
- * @configuration: &width=Width;text;100%
- *
+ * @author Deesen  / updated: 17.02.2016
+ * Latest Updates / Issues on Github : https://github.com/Deesen/ckeditor4-modx-evo
  */
+
 if (!defined('MODX_BASE_PATH')) { die('What are you doing? Get out of here!'); }
 
 // Init
