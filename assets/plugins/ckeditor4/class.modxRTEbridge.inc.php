@@ -113,12 +113,36 @@ class modxRTEbridge
         }
     }
 
+    // Function to append string to existing parameters
+    public function appendSet( $key, $value, $separator=',' )
+    {
+        if( $value === '' ) { return; }; // Nothing to append
+
+        if( isset($this->pluginParams[$key]) ) {
+            $this->pluginParams[$key] .= !empty( $this->pluginParams[$key] ) ? $separator : '';
+            $this->pluginParams[$key] .= $value;
+        };
+    }
+
     // Function to append custom HTML-Code to tpl.editor.init_once.html
     public function appendInitOnce($str)
     {
         if( !in_array($str, $this->initOnceArr)) {  // Avoid doubling..
             $this->initOnceArr[] = $str;
         };
+    }
+
+    // Helper to translate "bold,strike,underline,italic" to "bold","strike","underline","italic"
+    // Translates Modx Plugin-configuration strings to JSON-compatible string
+    public function addQuotesToCommaList($str, $quote='"')
+    {
+        if( empty($str)) { return ''; }
+
+        $elements = explode(',', $str);
+        foreach($elements as $key=>$val) {
+            $elements[$key] = $quote.$val.$quote;
+        };
+        return implode(',', $elements);
     }
 
     // Renders complete JS-Script
@@ -143,7 +167,8 @@ class modxRTEbridge
             $this->pluginParams['language'] = !isset($this->pluginParams['language']) ? $this->getLang($modx->config['manager_language']) : $this->pluginParams['language'];
         } else {
             // User is a webuser
-            include("{$this->pluginParams['base_path']}theme/theme.{$this->editorKey}.webuser.inc.php");
+            $webuserTheme = !empty( $params['pluginWebTheme'] ) ? $params['pluginWebTheme'] : 'webuser';
+            include("{$this->pluginParams['base_path']}theme/theme.{$this->editorKey}.{$webuserTheme}.inc.php");
             // @todo: determine user-language?
             $this->pluginParams['language'] = !isset($this->pluginParams['language']) ? $this->getLang($modx->config['manager_language']) : $this->pluginParams['language'];
         }
@@ -157,6 +182,8 @@ class modxRTEbridge
         $ph['configKey'] = $this->theme;
 
         $ph = array_merge( $params, $ph );  // Make config and params available as [+placeholder+] in templates
+        if( !isset($ph['pluginCustomParams'])) { $ph['pluginCustomParams'] = ''; }; // Don´t leave [+pluginCustomParams+] in JS-initialization
+
         $tpl = '';
 
         // Init only once at all - Load Editors-Library, CSS etc
@@ -193,7 +220,7 @@ class modxRTEbridge
         $bridgedParams = array();   // Params translated by bridge.xxxxxxxxxx.inc.php
         foreach( $this->bridgeParams as $editorParam=>$editorKey ) {
             if(is_callable($this->bridgeParams[$editorParam])) {     // Call function, get return
-                $return = $this->bridgeParams[$editorParam]($this->modxParams);
+                $return = $this->bridgeParams[$editorParam]();
                 if( $return !== NULL ) {
                     $bridgedParams[$editorParam] = $return;
                 };
@@ -217,14 +244,18 @@ class modxRTEbridge
 
             // Determine output-type
             switch( $conf['type'] ) {
+                case 'str':
                 case 'string':
                     $config[$key] = "        {$key}:'{$value}'";
                     break;
+                case 'int':
+                case 'const':
                 case 'constant':
                 case 'number':
                     $config[$key] = "        {$key}:{$value}";
                     break;
                 case 'bool':
+                case 'boolean':
                     $value = $value == true ? 'true' : 'false';
                     $config[$key] = "        {$key}:{$value}";
                     break;
@@ -451,6 +482,12 @@ class modxRTEbridge
     {
         if($cond !== false) return ' checked="checked"';
         else                return '';
+    }
+
+    // Remove all but numbers
+    public function onlyNumbers($string)
+    {
+        return preg_replace("/[^0-9]/","",$string); // Remove px, % etc
     }
 
     // Convert Modx-Langcode into Editor-Langcode
