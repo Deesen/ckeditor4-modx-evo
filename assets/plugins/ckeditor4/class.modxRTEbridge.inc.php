@@ -312,26 +312,26 @@ class modxRTEbridge
             case '12';
             case '119';
                 $selected = empty($ph[$this->editorKey.'_theme']) ? '"selected"':'';
-                $theme_options .= '<option value="" ' . $selected . '>' . $_lang['theme_global_settings'] . "</option>\n";
+                $theme_options .= '<option value="" ' . $selected . '>' . $this->lang('theme_global_settings') . "</option>\n";
         }
 
         // Prepare setting "theme"
-        $ph['theme_options'] = $this->getThemeNames( $_lang );
+        $ph['theme_options'] = $this->getThemeNames();
 
         // Prepare setting "skin"
         $ph['skin_options']  = $this->getSkinNames();
 
         // Prepare setting "entermode_options"
         $entermode = !empty($ph[$this->editorKey.'_entermode']) ? $ph[$this->editorKey.'_entermode'] : 'p';
-        $ph['entermode_options'] = '<label><input name="[+name+]" type="radio" value="p" '.  $this->checked($entermode=='p') . '/>' . $_lang['entermode_opt1'] . '</label><br />';
-        $ph['entermode_options'] .= '<label><input name="[+name+]" type="radio" value="br" '. $this->checked($entermode=='br') . '/>' . $_lang['entermode_opt2'] . '</label>';
+        $ph['entermode_options'] = '<label><input name="[+name+]" type="radio" value="p" '.  $this->checked($entermode=='p') . '/>' . $this->lang('entermode_opt1') . '</label><br />';
+        $ph['entermode_options'] .= '<label><input name="[+name+]" type="radio" value="br" '. $this->checked($entermode=='br') . '/>' . $this->lang('entermode_opt2') . '</label>';
         switch($modx->manager->action)
         {
             case '11':
             case '12':
             case '119':
                 $ph['entermode_options']  .= '<br />';
-                $ph['entermode_options']  .= '<label><input name="[+name+]" type="radio" value="" '.  $this->checked(empty($params[$this->editorKey.'_entermode'])) . '/>' . $_lang['theme_global_settings'] . '</label><br />';
+                $ph['entermode_options']  .= '<label><input name="[+name+]" type="radio" value="" '.  $this->checked(empty($params[$this->editorKey.'_entermode'])) . '/>' . $this->lang('theme_global_settings') . '</label><br />';
                 break;
         }
 
@@ -345,7 +345,7 @@ class modxRTEbridge
             case '12':
             case '119':
                 $ph['element_format_options']  .= '<br />';
-                $ph['element_format_options']  .= '<label><input name="[+name+]" type="radio" value="" '.  $this->checked(empty($params[$this->editorKey.'_element_format'])) . '/>' . $_lang['theme_global_settings'] . '</label><br />';
+                $ph['element_format_options']  .= '<label><input name="[+name+]" type="radio" value="" '.  $this->checked(empty($params[$this->editorKey.'_element_format'])) . '/>' . $this->lang('theme_global_settings') . '</label><br />';
                 break;
         }
 
@@ -359,7 +359,7 @@ class modxRTEbridge
             case '12':
             case '119':
                 $ph['schema_options']  .= '<br />';
-                $ph['schema_options']  .= '<label><input name="[+name+]" type="radio" value="" '.  $this->checked(empty($params[$this->editorKey.'_schema'])) . '/>' . $_lang['theme_global_settings'] . '</label><br />';
+                $ph['schema_options']  .= '<label><input name="[+name+]" type="radio" value="" '.  $this->checked(empty($params[$this->editorKey.'_schema'])) . '/>' . $this->lang('theme_global_settings') . '</label><br />';
                 break;
         };
 
@@ -380,7 +380,7 @@ class modxRTEbridge
             $row['messageVal']  = !empty( $row['messageVal'] ) ? $row['messageVal'] : '';
 
             // Prepare displaying of default values
-            $row['default'] = isset( $this->defaultValues[$name] ) ? '<span style="margin:0.5em 0;float:right;">'. $_lang['default'] .'<i>'.$this->defaultValues[$name].'</i></span>' : '';
+            $row['default'] = isset( $this->defaultValues[$name] ) ? '<span style="margin:0.5em 0;float:right;">'. $this->lang('default') .'<i>'.$this->defaultValues[$name].'</i></span>' : '';
 
             // Enable nested parsing
             $tmp         = $modx->parseText($settingsRowTpl, $row);
@@ -394,7 +394,7 @@ class modxRTEbridge
     }
 
     // helpers for getModxSettings()
-    public function getThemeNames( $_lang )
+    public function getThemeNames()
     {
         global $modx;
         $params = $this->pluginParams;
@@ -407,7 +407,7 @@ class modxRTEbridge
             case '12':
             case '119':
                 $selected = $this->selected(empty($params[$this->editorKey.'_skin']));
-                $option[] = '<option value=""' . $selected . '>' . "{$_lang['mce_theme_global_settings']}</option>";
+                $option[] = '<option value=""' . $selected . '>' . $this->lang('mce_theme_global_settings') . '</option>';
                 break;
         }
 
@@ -418,7 +418,7 @@ class modxRTEbridge
             $file = str_replace('theme.'.$this->editorKey.'.', '', $file );
 
             $theme = trim(str_replace('.inc.php', '', $file ));
-            $label = isset($_lang['theme_'.$theme]) ? $_lang['theme_'.$theme] : $theme; // Get optional translation
+            $label = $this->lang("theme_{$theme}") ? $this->lang("theme_{$theme}") : $theme; // Get optional translation
             $selected = $this->selected($theme == $this->modxParams['theme']);
 
             $option[] = '<option value="' . $theme . '"' . $selected . '>' . "{$label}</option>";
@@ -428,7 +428,7 @@ class modxRTEbridge
     }
     public function getSkinNames()
     {
-        global $modx, $_lang, $usersettings, $settings;
+        global $modx, $usersettings, $settings;
         $params = $this->pluginParams;
 
         if( empty($params['skinsDirectory'])) { return '<option value="">No skinsDirectory set</option>'; };
@@ -441,7 +441,7 @@ class modxRTEbridge
             case '12':
             case '119':
                 $selected = $this->selected(empty($params[$this->editorKey.'_skin']));
-                $option[] = '<option value=""' . $selected . '>' . "{$_lang['mce_theme_global_settings']}</option>";
+                $option[] = '<option value=""' . $selected . '>' . $this->lang('mce_theme_global_settings') . '</option>';
                 break;
         }
         foreach(glob("{$skinDir}*",GLOB_ONLYDIR) as $dir)
