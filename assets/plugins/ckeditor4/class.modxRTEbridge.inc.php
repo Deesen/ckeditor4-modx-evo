@@ -277,20 +277,11 @@ class modxRTEbridge
     // Outputs Modx- / user-configuration settings
     public function getModxSettings()
     {
-        global $modx, $_lang, $usersettings, $settings;
+        global $modx, $usersettings, $settings;
         $params = & $this->pluginParams;
 
         if(defined('INTERFACE_RENDERED_'.$this->editorKey)) { return ''; }
         define('INTERFACE_RENDERED_'.$this->editorKey, 1);
-
-        // Fallback to english
-        include("{$params['base_path']}lang/english.inc.php");
-
-        // Language settings
-        if (file_exists("{$params['base_path']}lang/".$modx->config['manager_language'].'.inc.php'))
-        {
-            include("{$params['base_path']}lang/".$modx->config['manager_language'].'.inc.php');
-        }
 
         // Avoid conflicts with older TinyMCE base configs, assure unique placeholders for template-handling like [+ckeditor4_custom_plugins+]
         $prependModxParams = array();
@@ -298,7 +289,7 @@ class modxRTEbridge
             $prependModxParams[$this->editorKey.'_'.$key] = $val;
         }
 
-        $ph = array_merge($prependModxParams, $params, $_lang);
+        $ph = array_merge($prependModxParams, $params);
 
         // Prepare [+display+]
         $ph['display'] = ($_SESSION['browser']==='modern') ? 'table-row' : 'block';
