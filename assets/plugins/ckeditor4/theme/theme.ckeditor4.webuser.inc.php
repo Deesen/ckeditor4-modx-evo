@@ -1,37 +1,34 @@
 <?php
 /*
- * CKEditor4 for Modx Evolution
- * CK-Base: CKEditor 4.5.7
- *
- * Latest Updates / Issues on Github:
- * https://github.com/Deesen/ckeditor4-modx-evo
- *
  * All available config-params of CKEditor4
  * http://docs.ckeditor.com/#!/api/CKEDITOR.config
  *
- * ! All params can be set individual via Modx-Plugin-Configuration, or directly in Plugin-code with
- *   $ck->set( $key, $value, $default=NULL )
+ * Belows default configuration setup assures all editor-params have a fallback-value, and type per key is known
+ * $this->set( $editorParam, $value, $type, $emptyAllowed=false )
  *
- * Belows default configuration setup assures all CK-config-params have a fallback-value, and format per key is known
- * $this->def( $ckConfigKey, $type, $defaultValue, $emptyAllowed=false )
- *
- * $ckConfigParam   = Every config-param can be set via Modx-Plugin-Configuration, or this config-file
+ * $editorParam     = param to set
+ * $value           = value to set
  * $type            = string, number, bool, json (array or string)
- *
- * $emptyAllowed    = true, false
+ * $emptyAllowed    = true, false (allows param:'' instead of falling back to default)
  * If $ckConfigParam is empty and $emptyAllowed is true, $defaultValue will be ignored
  *
+ * $modxParams holds an array of actual Modx- / user-settings
+ *
+ * Check theme.ckeditor4.default.inc.php for more examples
  * */
 
 // @todo: Set default-config for webusers
-$this->set('height',                'string',   '400px'   );
-$this->set('width',                 'string',   '100%'    );
-$this->set('language',              'string',   'en'      );
-$this->set('skin',                  'string',   'moono'   );
-$this->set('toolbarGroups',         'json',     '[
-            { name: "document",    groups: [ "mode", "document", "doctools" ] },
-            { name: "clipboard",   groups: [ "clipboard", "undo" ] },
-            { name: "editing",     groups: [ "find", "selection", "spellchecker" ] },
-            "/",
-            { name: "paragraph",   groups: [ "list", "indent", "blocks", "align", "bidi" ] }
-            ]' );
+if( !empty( $this->pluginParams['pluginWebPlugins'])) {
+    $this->set('plugins', $this->pluginParams['pluginWebPlugins'], 'string' );
+};
+
+$this->set('toolbar',         '[
+                { name: "row1",     items: [ '. $this->addQuotesToCommaList( $this->pluginParams['pluginWebButtons1'] ) .' ]},
+                '. (!empty($this->pluginParams['pluginWebButtons2']) ? '"/",' : '') .'
+                { name: "row2",     items: [ '. $this->addQuotesToCommaList( $this->pluginParams['pluginWebButtons2'] ) .' ]},
+                '. (!empty($this->pluginParams['pluginWebButtons3']) ? '"/",' : '') .'
+                { name: "row3",     items: [ '. $this->addQuotesToCommaList( $this->pluginParams['pluginWebButtons3'] ) .' ]},
+                '. (!empty($this->pluginParams['pluginWebButtons4']) ? '"/",' : '') .'
+                { name: "row4",     items: [ '. $this->addQuotesToCommaList( $this->pluginParams['pluginWebButtons4'] ) .' ]},
+                { name: "about",    items: [ "About" ]}
+            ]', 'json' );

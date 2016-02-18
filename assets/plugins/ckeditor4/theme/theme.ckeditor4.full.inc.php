@@ -17,8 +17,4 @@
  * Check theme.ckeditor4.default.inc.php for more examples
  * */
 
-$this->set('height',            '200px',    'string' );
-$this->set('width',             '200px',    'string' );
-$this->set('toolbarGroups',     '[
-                {"name":"basicstyles","groups":["basicstyles"]}
-            ]', 'json' );
+// Set nothing - show CKEditor4´s internal defaults
