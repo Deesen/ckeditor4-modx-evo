@@ -1,4 +1,4 @@
-## ckeditor4-modx-evo
+## ckeditor4-modx-evo v4.5.7.0
 
 Requires installation of plugin `assets/plugins/ckeditor4/plugin.ckeditor4.php`:
 
@@ -15,18 +15,19 @@ Requires installation of plugin `assets/plugins/ckeditor4/plugin.ckeditor4.php`:
 ------------------------------------------------------------------------------
     
 ##### @todo:
-  - add configuration-string for webusers to plugins
-  - add theme webusers using plugin-configuration
-  - add more / finish themes as per old TinyMCE defaults (simple, full, advanced, editor, custom, creative, logic, legacy)
+  - finish bridgeParams.path_options
+  - rename theme.default to theme.base (base sets general params like editorpath etc)
+  - remove option theme.base from configuration-settings
   - add theme "custom": use "custom_plugins", "custom_buttons" ..
   - custom plugin "template button" to insert content of chunk/ressource at cursor position
   - customize all language-files
   - kcfinder-integration safe / final? compare with tinymce3´s `mceOpenServerBrowser()`
-  - make [*introtext*] an optional richtextmini?
+  - add custom editorCss-path to settings
+  - theme.default: block_format causing error, why?
   - @todos inline
 
 ##### History:  
-  - 17.02.2016 v0.1: Initial release
+  - 17.02.2016 v4.5.7.0: Initial release
     - link-creation with option to choose from Modx-Ressourcetree
     - kcfinder for img/file-linking
     - documentDirty is catched
