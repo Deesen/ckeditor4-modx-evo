@@ -47,5 +47,5 @@ $_lang['tpl_docid'] = 'Resource IDs';
 $_lang['tpl_chunkname'] = 'Chunk Names';
 
 $_lang['default'] = 'Default: ';
-$_lang['height_title'] = 'Height';
-$_lang['height_message'] = 'Set default-height in px or % like 400px.';
+$_lang['maxHeight_title'] = 'Max-Height';
+$_lang['maxHeight_message'] = 'Set maximum height without px like 400.';
