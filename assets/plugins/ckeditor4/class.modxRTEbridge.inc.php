@@ -164,13 +164,13 @@ class modxRTEbridge
             include("{$this->pluginParams['base_path']}theme/theme.{$this->editorKey}.default.inc.php");
             if( $this->theme != 'default' )
                 include("{$this->pluginParams['base_path']}theme/theme.{$this->editorKey}.{$this->theme}.inc.php");
-            $this->pluginParams['language'] = !isset($this->pluginParams['language']) ? $this->getLang($modx->config['manager_language']) : $this->pluginParams['language'];
+            $this->pluginParams['language'] = !isset($this->pluginParams['language']) ? $this->lang('lang_code') : $this->pluginParams['language'];
         } else {
             // User is a webuser
             $webuserTheme = !empty( $params['pluginWebTheme'] ) ? $params['pluginWebTheme'] : 'webuser';
             include("{$this->pluginParams['base_path']}theme/theme.{$this->editorKey}.{$webuserTheme}.inc.php");
             // @todo: determine user-language?
-            $this->pluginParams['language'] = !isset($this->pluginParams['language']) ? $this->getLang($modx->config['manager_language']) : $this->pluginParams['language'];
+            $this->pluginParams['language'] = !isset($this->pluginParams['language']) ? $this->lang('lang_code') : $this->pluginParams['language'];
         }
 
         // Now merge back plugin-settings
@@ -508,45 +508,5 @@ class modxRTEbridge
     public function onlyNumbers($string)
     {
         return preg_replace("/[^0-9]/","",$string); // Remove px, % etc
-    }
-
-    // Convert Modx-Langcode into Editor-Langcode
-    public function getLang($lang)
-    {
-        // @todo: Compare Modx-Codes / language-files
-        switch(strtolower($lang))
-        {
-            case 'bulgarian'             : $lc = 'bg';      break;
-            case 'chinese'               :
-            case 'simple_chinese-gb2312' : $lc = 'zh-cn';   break;
-            case 'czech'                 : $lc = 'cs';      break;
-            case 'danish'                : $lc = 'da';      break;
-            case 'dutch'                 :
-            case 'nederlands-utf8'       :
-            case 'nederlands'            : $lc = 'nl';      break;
-            case 'finnish'               : $lc = 'fi';      break;
-            case 'francais'              :
-            case 'francais-utf8'         : $lc = 'fr';      break;
-            case 'german'                : $lc = 'de';      break;
-            case 'hebrew'                : $lc = 'he';      break;
-            case 'italian'               : $lc = 'it';      break;
-            case 'japanese-utf8'         :
-            case 'japanese-euc'          : $lc = 'ja';      break;
-            case 'norsk'                 : $lc = 'nb';      break;
-            case 'persian'               : $lc = 'fa';      break;
-            case 'polish-utf8'           :
-            case 'polish'                : $lc = 'pl';      break;
-            case 'portuguese-br'         : $lc = 'pt-br';   break;
-            case 'portuguese'            : $lc = 'pt';      break;
-            case 'russian'               :
-            case 'russian-utf8'          : $lc = 'ru';      break;
-            case 'spanish-utf8'          :
-            case 'spanish'               : $lc = 'es';      break;
-            case 'svenska'               :
-            case 'svenska-utf8'          : $lc = 'sv';      break;
-
-            default                      : $lc = 'en';
-        }
-        return $lc;
     }
 }
