@@ -82,7 +82,7 @@ class modxRTEbridge
         if( !empty( $theme )) {
             $this->theme                        = $theme;
         } else {
-            $this->theme                        = isset($modxParams['theme']) ? $modxParams['theme'] : 'default';
+            $this->theme                        = isset($this->modxParams['theme']) ? $this->modxParams['theme'] : 'default';
         };
         $this->pluginParams                     = $modx->event->params;
         $this->pluginParams['editorLabel']      = isset( $editorLabel ) ? $editorLabel : 'No editorLabel set';
