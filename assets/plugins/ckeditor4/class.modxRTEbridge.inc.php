@@ -201,7 +201,7 @@ class modxRTEbridge
             define($this->editorKey.'_INIT_ONCE', 1);
             $tpl .= file_get_contents("{$params['base_path']}tpl/tpl.{$this->editorKey}.init_once.html");
             if(!empty($this->initOnceArr)) {
-                $tpl .= implode(",\n", $this->initOnceArr);
+                $tpl .= implode("\n", $this->initOnceArr);
             }
         }
 
@@ -258,6 +258,10 @@ class modxRTEbridge
                 case 'string': case 'str':
                     $config[$key] = "        {$key}:'{$value}'";
                     break;
+                case 'array': case 'arr':
+                    if( is_array($value)) {
+                        $value = "['". implode("','", $value) ."']";
+                    }; // then handle as object
                 case 'int':
                 case 'constant': case 'const':
                 case 'number':
@@ -383,8 +387,8 @@ class modxRTEbridge
 
             // Enable nested parsing
             $output         = $modx->parseText($settingsRowTpl, $row); // Replace general translations
-            $output         = $modx->parseText($output, $ph);          // Replace values / settings
-            $output         = $modx->parseText($output, $row);         // Replace new PHs from values / settings
+            $output         = $modx->parseText($output, $ph);             // Replace values / settings
+            $output         = $modx->parseText($output, $row);            // Replace new PHs from values / settings
 
             // Replace missing translations
             $output         = $this->replaceTranslations( $output );
