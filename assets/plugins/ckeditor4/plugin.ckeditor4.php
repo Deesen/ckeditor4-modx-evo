@@ -20,7 +20,7 @@ if (!defined('MODX_BASE_PATH')) { die('What are you doing? Get out of here!'); }
 include_once(MODX_BASE_PATH."assets/plugins/ckeditor4/class.modxRTEbridge.inc.php");
 $rte = new modxRTEbridge('ckeditor4');
 
-// Overwrite item-parameters
+// Overwrite theme
 // $rte->set('width',          '75%', 'string' );                               // Overwrite width parameter
 // $rte->set('height',         isset($height) ? $height : '400px', 'string' );  // Get/set height from plugin-configuration
 // $rte->set('height',         NULL );                                          // Removes "height" completely from editor-init

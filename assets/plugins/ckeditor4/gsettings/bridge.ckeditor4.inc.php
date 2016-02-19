@@ -4,14 +4,42 @@
 */
 
 // Editor-Settings
-$editorLabel = 'CKEditor4';         // Name displayed in Modx-Dropdowns
-$skinsDirectory = 'ckeditor/skins';    // Relative to plugin-dir
+$editorLabel    = 'CKEditor4';      // Name displayed in Modx-Dropdowns - No HTML!
+$skinsDirectory = 'ckeditor/skins'; // Relative to plugin-dir
+$editorVersion  = '4.5.7';          // Version of CKEditor-Library
+$editorLogo     = 'ckeditor/plugins/about/dialogs/hidpi/logo_ckeditor.png'; // Optional Image displayed in Modx-settings
 
 // Dynamic translation of Modx-settings to editor-settings
 $bridgeParams = array(
 
     // editor-param => translate-function (return NULL = no translation, still allows $this->set(), $this->appendInitOnce() etc )
 
+    'css_selectors' => function () {
+        // http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-stylesSet
+
+        // Input-Format:  Mono==pre==mono||Small Text==span==small
+        // Output-Format: [{ name: "CSS Style", element: "span", attributes: { "class": "my_style" } }],
+
+        if(!empty($this->modxParams['css_selectors'])) {
+            $setsArr = explode('||', $this->modxParams['css_selectors']);
+
+            $stylesSet = array();
+            foreach( $setsArr as $setStr ){
+                if(!empty($setStr)) {
+                    $setArr = explode('==', $setStr);
+                    $newSet = array(
+                        'name'=>$setArr[0],
+                        'element'=>$setArr[1],
+                        'attributes'=>array('class'=>$setArr[2])
+                    );
+                    $stylesSet[]= $newSet;
+                };
+            };
+
+            $this->set('stylesSet', $stylesSet, 'json');
+        };
+        return NULL;
+    },
     'enterMode' => function () {
         // http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-enterMode
         switch ($this->modxParams['entermode']) {
@@ -74,46 +102,49 @@ $bridgeParams = array(
         return NULL;    // Important
     },
     'path_options' => function () {
-        // @todo: finish
+        $relativeUrl = '';
+        $absoluteUrl = '/';
+        $fullUrl     = MODX_SITE_URL;
+
         switch ($this->pluginParams['pluginPathOptions']) {
             case 'Site config':
             case 'siteconfig':
                 if ($modx->config['strip_image_paths'] == 1) {
-//                                            $ph['relative_urls'] = 'true';
-//                                            $ph['remove_script_host'] = 'true';
-//                                            $ph['convert_urls'] = 'true';
+                    // @todo: TinyMCE3 "convert_urls" equivalent setting/method in CKEditor?
+                    // TinyMCE3: assets/images/example.png
+                    // TinyMCE3: convert_urls = true
+                    $this->set('baseHref', $relativeUrl, 'string', true);
                 } else {
-//                                            $ph['relative_urls'] = 'false';
-//                                            $ph['remove_script_host'] = 'false';
-//                                            $ph['convert_urls'] = 'true';
+                    // TinyMCE3: http://localhost/assets/images/example.png
+                    // TinyMCE3: convert_urls = true
+                    $this->set('baseHref', $fullUrl, 'string', true);
                 }
                 break;
             case 'Root relative':
             case 'docrelative':
-//                                        $ph['relative_urls'] = 'true';
-//                                        $ph['remove_script_host'] = 'true';
-//                                        $ph['convert_urls'] = 'true';
+                // TinyMCE3: assets/images/example.png
+                // TinyMCE3: convert_urls = true
+                $this->set('baseHref', $relativeUrl, 'string', true);
                 break;
             case 'Absolute path':
             case 'rootrelative':
-//                                        $ph['relative_urls'] = 'false';
-//                                        $ph['remove_script_host'] = 'true';
-//                                        $ph['convert_urls'] = 'true';
+                // TinyMCE3: /assets/images/example.png
+                // TinyMCE3: convert_urls = true
+                $this->set('baseHref', $absoluteUrl, 'string', true);
                 break;
             case 'URL':
             case 'fullpathurl':
-//                                        $ph['relative_urls'] = 'false';
-//                                        $ph['remove_script_host'] = 'false';
-//                                        $ph['convert_urls'] = 'true';
+                // TinyMCE3: http://localhost/assets/images/example.png
+                // TinyMCE3: convert_urls = true
+                $this->set('baseHref', $fullUrl, 'string', true);
                 break;
             case 'No convert':
             default:
-//                                        $ph['relative_urls'] = 'true';
-//                                        $ph['remove_script_host'] = 'true';
-//                                        $ph['convert_urls'] = 'false';
+                // TinyMCE3: assets/images/example.png
+                // TinyMCE3: convert_urls = false
+                $this->set('baseHref', $relativeUrl, 'string', true);
         }
         return NULL;    // Important
-
     },
     'advanced_resizing' => function () {
         // http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-resize_dir
@@ -132,6 +163,7 @@ $bridgeParams = array(
         // http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-contentsLangDirection
         if( $this->pluginParams['pluginWebAlign'] == 'rtl') {
             $this->set('contentsLangDirection', 'rtl', 'string');
+            $this->appendInitOnce('<style>.cke_toolbox,.cke_toolbar { float:right !important; }</style>');
         };
     },
 

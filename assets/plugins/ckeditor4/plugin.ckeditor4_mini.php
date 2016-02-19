@@ -20,10 +20,9 @@ if (!defined('MODX_BASE_PATH')) { die('What are you doing? Get out of here!'); }
 include_once(MODX_BASE_PATH."assets/plugins/ckeditor4/class.modxRTEbridge.inc.php");
 $rte = new modxRTEbridge('ckeditor4','mini');
 
-// Overwrite item-parameters
-// $rte->set('width',          '150px', 'string' );                             // Overwrite width parameter
-// $rte->set('height',         isset($height) ? $height : '150px', 'string' );  // Get/set height from plugin-configuration
-// $rte->set('height',         NULL );                                          // Removes "height" completely from editor-init
+// Overwrite theme
+$rte->set('width',          isset($width)  ? $width  : '200px', 'string' );  // Get/set width from plugin-configuration
+$rte->set('height',         isset($height) ? $height : '200px', 'string' );  // Get/set height from plugin-configuration
 
 // Internal Stuff - Don´t touch!
 $showSettingsInterface = false; // Show/Hide interface in Modx- / user-configuration (false for "Mini")

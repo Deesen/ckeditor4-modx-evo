@@ -1,4 +1,8 @@
-## ckeditor4-modx-evo v4.5.7.0
+## ckeditor4-modx-evo
+
+All settings and configurations are adapted to the old TinyMCE3-settings as good as possible.
+
+------------------------------------------------------------------------------
 
 Requires installation of plugin `assets/plugins/ckeditor4/plugin.ckeditor4.php`:
 
@@ -8,25 +12,20 @@ Requires installation of plugin `assets/plugins/ckeditor4/plugin.ckeditor4.php`:
   - Paste content of file `assets/plugins/ckeditor4/plugin.ckeditor4.php` into Modx Plugin-Code
   - Set system-events `OnRichTextEditorRegister, OnRichTextEditorInit, OnInterfaceSettingsRender`
   - Save new plugin
-  - Optional for "richtextmini": Same steps as above BUT
+  - Optional for "richtextmini" (not yet merged into Modx 1.1RC): Same steps as above BUT
     - Name it "CKEditor4 Mini"
     - Paste content of file `assets/plugins/ckeditor4/plugin.ckeditor4_mini.php` into Modx Plugin-Code
   
 ------------------------------------------------------------------------------
     
 ##### @todo:
-  - finish bridgeParams.path_options
-  - rename theme.default to theme.base (base sets general params like editorpath etc)
-  - remove option theme.base from configuration-settings
-  - add theme "custom": use "custom_plugins", "custom_buttons" ..
   - custom plugin "template button" to insert content of chunk/ressource at cursor position
   - customize all language-files
   - kcfinder-integration safe / final? compare with tinymce3´s `mceOpenServerBrowser()`
-  - add custom editorCss-path to settings
-  - theme.default: block_format causing error, why?
   - @todos inline
 
-##### History:  
+##### History:
+  - 19.02.2016: Finished themes / plugin / settings
   - 17.02.2016 v4.5.7.0: Initial release
     - link-creation with option to choose from Modx-Ressourcetree
     - kcfinder for img/file-linking
