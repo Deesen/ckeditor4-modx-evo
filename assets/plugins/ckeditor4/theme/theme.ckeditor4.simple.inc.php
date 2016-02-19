@@ -14,7 +14,7 @@
  *
  * $modxParams holds an array of actual Modx- / user-settings
  *
- * Check theme.ckeditor4.default.inc.php for more examples
+ * Check theme.ckeditor4.base.inc.php for more examples
  * */
 
 // http://docs.ckeditor.com/#!/guide/dev_toolbar-section-%22item-by-item%22-configuration

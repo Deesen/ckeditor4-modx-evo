@@ -14,7 +14,7 @@
  *
  * $modxParams holds an array of actual Modx- / user-settings
  *
- * Check theme.ckeditor4.default.inc.php for more examples
+ * Check theme.ckeditor4.base.inc.php for more examples
  * */
 
 $this->set('height',            '200px',    'string' );

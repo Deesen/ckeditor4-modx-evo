@@ -14,34 +14,41 @@
  *
  * $modxParams holds an array of actual Modx- / user-settings
  *
- * Check theme.ckeditor4.default.inc.php for more examples
  * */
 
-// element_format is set via bridge as it requires additional Javascript injected
-
-// @todo: customize plugin "stylescombo": http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-stylesSet
+// CKEditor4 - Base config --- See gesettings/bridge.ckeditor4.inc.php for more base params
 
 if( !empty( $params['pluginFormats'] )) {
-    // @todo: format_tags causes error, why? http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-format_tags
-    // $this->set('format_tags',       str_replace(',', ';', $params['pluginFormats']), 'string' );
+    // http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-format_tags
+    $tagsStr = str_replace(',', ';', $params['pluginFormats']);
+    $this->set('format_tags', $tagsStr, 'string' );
+
+    // Important: Each entry must have a corresponding configuration 'format_(tagName)' - let´s take care
+    $tagsArr = explode(';', $tagsStr);
+    foreach( $tagsArr as $tag ) {
+        $this->set('format_'.$tag, '{ element: "'.$tag.'" }', 'object' );
+    };
 };
+
+// Avoid set empty contentsCss
+if( !empty( $modx->config['editor_css_path'] )) {
+    $this->set('contentsCss', $modx->config['editor_css_path'], 'string');
+}
 
 $this->set('skin',                  'moono',                        'string' );   // Set default
 $this->set('skin',                  $modxParams['skin'] );                        // Overwrite with Modx-setting
 $this->set('enterMode',             'p',                            'constant' ); // Translated via bridge.ckeditor4.inc.php
-$this->set('contentsCss',           $modx->config['editor_css_path'], 'string' );
 $this->set('width',                 $pluginParams['width'],           'string' );
 $this->set('height',                $pluginParams['height'],          'string' );
 $this->set('extraPlugins',          'dialogadvtab,tableresize,stylescombo,embed,showborders,nbsp', 'string', true );
 
-// $this->set('language',          'en',       'string' );
-// $this->set('skin',              'moono',    'string' );
-// $this->set('plugins',            '',        'string', true );
-// $this->set('extraPlugins',      'dialogadvtab,xy', 'string', true );
-// $this->set('removePlugins',     '',         'string', true );
+// Filebrowser config
+$this->set('filebrowserBrowseUrl', 'media/browser/mcpuk/browse.php?opener=ckeditor4&type=files', 'string');
+$this->set('filebrowserImageBrowseUrl', 'media/browser/mcpuk/browse.php?opener=ckeditor4&type=images', 'string');
+$this->set('filebrowserFlashBrowseUrl', 'media/browser/mcpuk/browse.php?opener=ckeditor4&type=flash', 'string');
+
 
 /*
-//
 $this->set('toolbarGroups',     '[
                 { name: "document",    groups: [ "mode", "document", "doctools" ] },
                 { name: "clipboard",   groups: [ "clipboard", "undo" ] },
