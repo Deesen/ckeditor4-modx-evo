@@ -1,6 +1,12 @@
 ## ckeditor4-modx-evo v4.5.7.0
 
-Ready for production. All settings and configurations are adapted to the old TinyMCE3-settings as good as possible.
+Ready for production. All settings and configurations are adapted to the old Modx/TinyMCE3-settings as good as possible
+
+  - Filebrowser / KCfinder integrated for images, flash and files
+  - CKEditor-plugin "embed" for media-files
+  - Easy link-creation by choosing from Modx ressource-tree
+  - Webuser- / custom-template handling as per TinyMCE3
+  - Settings via Modx- / user- and plugin-configuration
 
 ------------------------------------------------------------------------------
 
@@ -19,7 +25,7 @@ Manual installation of plugin `assets/plugins/ckeditor4/plugin.ckeditor4.php`:
 ------------------------------------------------------------------------------
     
 ##### @todo:
-  - add linklist to link-button
+  - add linklist to link-button (URLS can already be created choosing from Modx ressource-tree)
   - customize all language-files
   - add optional modx-langKey to editor-langKey translation to bridge?
   - check inline @todos
