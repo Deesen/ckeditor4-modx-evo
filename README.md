@@ -1,10 +1,10 @@
-## ckeditor4-modx-evo
+## ckeditor4-modx-evo v4.5.7.0
 
-All settings and configurations are adapted to the old TinyMCE3-settings as good as possible.
+Ready for production. All settings and configurations are adapted to the old TinyMCE3-settings as good as possible.
 
 ------------------------------------------------------------------------------
 
-Requires installation of plugin `assets/plugins/ckeditor4/plugin.ckeditor4.php`:
+Manual installation of plugin `assets/plugins/ckeditor4/plugin.ckeditor4.php`:
 
   - Copy files of `assets/plugins/ckeditor4/` to your Modx-installation 
   - In Modx Manager go to Elements -> Plugins and create new plugin
@@ -19,14 +19,16 @@ Requires installation of plugin `assets/plugins/ckeditor4/plugin.ckeditor4.php`:
 ------------------------------------------------------------------------------
     
 ##### @todo:
-  - custom plugin "template button" to insert content of chunk/ressource at cursor position
+  - add linklist to link-button
   - customize all language-files
-  - kcfinder-integration safe / final? compare with tinymce3´s `mceOpenServerBrowser()`
-  - @todos inline
+  - add optional modx-langKey to editor-langKey translation to bridge?
+  - check inline @todos
 
 ##### History:
-  - 19.02.2016: Finished themes / plugin / settings
-  - 17.02.2016 v4.5.7.0: Initial release
+  - 19.02.2016: 
+    - Finished themes / plugin / settings
+    - added connector.template to support template-button for inserting ressources and chunks
+  - 11.02. - 17.02.2016:
     - link-creation with option to choose from Modx-Ressourcetree
     - kcfinder for img/file-linking
     - documentDirty is catched
@@ -35,5 +37,5 @@ Requires installation of plugin `assets/plugins/ckeditor4/plugin.ckeditor4.php`:
         - allows dynamic settings via Modx- / user-configuration for multiple RTEs
         - allows dynamically translation of Modx- to specific editor-params
         - themes are handled like skins (choose theme-file instead of limited theme-list) 
-    - ready for richtextmini 
+    - ready for richtextmini (only concept right now)
     - based on CKEditor 4.5.7
