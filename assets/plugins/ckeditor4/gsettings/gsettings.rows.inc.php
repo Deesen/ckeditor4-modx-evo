@@ -64,7 +64,7 @@ $settingsRows = array(
     'css_selectors'=>array(
         'title'=>'editor_css_selectors_title',
         'configTpl'=>'
-                    <input type="text" class="inputBox" style="width: 300px;" name="[+name+]" value="[+[+editorKey+]_css_selectors+]" />',
+                    <textarea class="inputBox mce" name="[+name+]">[+[+editorKey+]_css_selectors+]</textarea>',
         'message'=>'editor_css_selectors_message'
     )
 );

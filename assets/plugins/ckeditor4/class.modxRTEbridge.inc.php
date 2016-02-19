@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @author Deesen, yama / updated: 19.02.2016
+ * Issue on Github: https://github.com/modxcms/evolution/issues/498
+ */
+
 class modxRTEbridge
 {
     public $editorKey = '';                 // Key for config/tpl/settings-files (ckeditor4, tinymce4, ...)
@@ -11,6 +16,7 @@ class modxRTEbridge
     public $initOnceArr     = array();      // Holds custom HTML-Code to inject into tpl.xxxxxxxxx.init_once.html
     public $customSettings  = array();      // Holds custom settings to enable setting via Modx- / user-configuration
     public $defaultValues   = array();      // Holds default values for settings
+    public $langArr         = array();      // Holds lang strings
 
     public function __construct($editorKey=NULL, $theme='' )
     {
@@ -87,6 +93,8 @@ class modxRTEbridge
         $this->pluginParams                     = $modx->event->params;
         $this->pluginParams['editorLabel']      = isset( $editorLabel ) ? $editorLabel : 'No editorLabel set';
         $this->pluginParams['editorLabel']     .= $theme == 'mini' ? ' Mini' : '';
+        $this->pluginParams['editorVersion']    = isset( $editorVersion ) ? $editorVersion : 'No editorVersion set';
+        $this->pluginParams['editorLogo']       = isset( $editorLogo ) ? $editorLogo : '';
         $this->pluginParams['skinsDirectory']   = isset( $skinsDirectory ) && !empty( $skinsDirectory ) ? trim($skinsDirectory, "/") . "/" : '';
         $this->pluginParams['base_path']        = $basePath;
         $this->pluginParams['base_url']         = $baseUrl;
@@ -160,14 +168,16 @@ class modxRTEbridge
         // Load theme for user or webuser
         if($modx->isBackend() || (intval($_GET['quickmanagertv']) == 1 && isset($_SESSION['mgrValidated']))) {
             // User is logged into Manager
-            // Load default first to assure Modx settings like entermode, editor_css_path are given set, can be overwritten in custom theme
-            include("{$this->pluginParams['base_path']}theme/theme.{$this->editorKey}.default.inc.php");
+            // Load base first to assure Modx settings like entermode, editor_css_path are given set, can be overwritten in custom theme
+            include("{$this->pluginParams['base_path']}theme/theme.{$this->editorKey}.base.inc.php");
             if( $this->theme != 'default' )
                 include("{$this->pluginParams['base_path']}theme/theme.{$this->editorKey}.{$this->theme}.inc.php");
             $this->pluginParams['language'] = !isset($this->pluginParams['language']) ? $this->lang('lang_code') : $this->pluginParams['language'];
         } else {
             // User is a webuser
             $webuserTheme = !empty( $params['pluginWebTheme'] ) ? $params['pluginWebTheme'] : 'webuser';
+            // Load base first or set EVERYTHING for webuser only in webuser-theme?
+            // include("{$this->pluginParams['base_path']}theme/theme.{$this->editorKey}.base.inc.php");
             include("{$this->pluginParams['base_path']}theme/theme.{$this->editorKey}.{$webuserTheme}.inc.php");
             // @todo: determine user-language?
             $this->pluginParams['language'] = !isset($this->pluginParams['language']) ? $this->lang('lang_code') : $this->pluginParams['language'];
@@ -236,31 +246,29 @@ class modxRTEbridge
             $value = isset( $bridgedParams[$key] )                          ? $bridgedParams[$key]      : NULL;
             $value = $value === NULL && isset( $this->pluginParams[$key] )  ? $this->pluginParams[$key] : $value;
             $value = $value === ''   && $conf['empty'] == true              ? ''                        : $value;
+            if( $value == '' && $conf['empty'] == false && $conf['default'] == '' ) continue;    // Skip none-allowed empty setting
             $value = $value === NULL                                        ? $conf['default']          : $value;
 
             // Escape quotes
-            if(strpos($value,"'")!==false)
+            if(!is_array($value) && strpos($value,"'")!==false)
                 $value = str_replace("'", "\\'", $value);
 
             // Determine output-type
             switch( $conf['type'] ) {
-                case 'str':
-                case 'string':
+                case 'string': case 'str':
                     $config[$key] = "        {$key}:'{$value}'";
                     break;
                 case 'int':
-                case 'const':
-                case 'constant':
+                case 'constant': case 'const':
                 case 'number':
+                case 'object': case 'obj':
                     $config[$key] = "        {$key}:{$value}";
                     break;
-                case 'bool':
-                case 'boolean':
+                case 'boolean': case 'bool':
                     $value = $value == true ? 'true' : 'false';
                     $config[$key] = "        {$key}:{$value}";
                     break;
                 case 'json':
-                    // @todo finish when it is needed..
                     if( is_array($value)) $value = json_encode($value);
                     $config[$key] = "        {$key}:{$value}\n        ";
                     break;
@@ -366,22 +374,48 @@ class modxRTEbridge
 
             $row['name']        = $this->editorKey .'_'. $name;
             $row['editorKey']   = $this->editorKey;
-            $row['title']       = $ph[$row['title']];
-            $row['message']     = $ph[$row['message']];
+            $row['title']       = $this->lang($row['title']);
+            $row['message']     = $this->lang($row['message']);
             $row['messageVal']  = !empty( $row['messageVal'] ) ? $row['messageVal'] : '';
 
             // Prepare displaying of default values
-            $row['default'] = isset( $this->defaultValues[$name] ) ? '<span style="margin:0.5em 0;float:right;">'. $this->lang('default') .'<i>'.$this->defaultValues[$name].'</i></span>' : '';
+            $row['default'] = isset( $this->defaultValues[$name] ) ? '<span class="default-val" style="margin:0.5em 0;float:right;">'. $this->lang('default') .'<i>'.$this->defaultValues[$name].'</i></span>' : '';
 
             // Enable nested parsing
-            $tmp         = $modx->parseText($settingsRowTpl, $row);
-            $tmp         = $modx->parseText($tmp, $ph);
-            $ph['rows'] .= $modx->parseText($tmp, $row) ."\n";
+            $output         = $modx->parseText($settingsRowTpl, $row); // Replace general translations
+            $output         = $modx->parseText($output, $ph);          // Replace values / settings
+            $output         = $modx->parseText($output, $row);         // Replace new PHs from values / settings
+
+            // Replace missing translations
+            $output         = $this->replaceTranslations( $output );
+
+            $ph['rows'] .= $output ."\n";
         };
 
         $settingsBody = file_get_contents("{$params['base_path']}gsettings/gsettings.body.inc.html");
 
-        return $modx->parseText($settingsBody, $ph);
+        $ph['editorLogo'] = !empty( $this->pluginParams['editorLogo'] ) ? '<img src="'. $this->pluginParams['base_url'] . $this->pluginParams['editorLogo'] .'" style="max-height:50px;width:auto;margin-right:50px;" />' : '';
+
+        $settingsBody = $modx->parseText($settingsBody, $ph);
+        $settingsBody = $this->replaceTranslations( $settingsBody );
+
+        return $settingsBody;
+    }
+
+    public function replaceTranslations( $output )
+    {
+        global $modx;
+
+        $placeholderArr = $modx->getTagsFromContent($output,'[+','+]');
+        if(!empty($placeholderArr)) {
+            foreach ($placeholderArr[1] as $key => $val) {
+                $trans = $this->lang($val, true);
+
+                if( $trans !== NULL )
+                    $output = str_replace($placeholderArr[0][$key], $trans, $output);
+            };
+        };
+        return $output;
     }
 
     // helpers for getModxSettings()
@@ -398,7 +432,7 @@ class modxRTEbridge
             case '12':
             case '119':
                 $selected = $this->selected(empty($params[$this->editorKey.'_skin']));
-                $option[] = '<option value=""' . $selected . '>' . $this->lang('mce_theme_global_settings') . '</option>';
+                $option[] = '<option value=""' . $selected . '>' . $this->lang('theme_global_settings') . '</option>';
                 break;
         }
 
@@ -409,7 +443,8 @@ class modxRTEbridge
             $file = str_replace('theme.'.$this->editorKey.'.', '', $file );
 
             $theme = trim(str_replace('.inc.php', '', $file ));
-            $label = $this->lang("theme_{$theme}") ? $this->lang("theme_{$theme}") : $theme; // Get optional translation
+            if( $theme == 'base') continue; // Why should user select base-theme?
+            $label = $this->lang("theme_{$theme}", true) ? $this->lang("theme_{$theme}") : $theme; // Get optional translation or show raw themeKey
             $selected = $this->selected($theme == $this->modxParams['theme']);
 
             $option[] = '<option value="' . $theme . '"' . $selected . '>' . "{$label}</option>";
@@ -432,7 +467,7 @@ class modxRTEbridge
             case '12':
             case '119':
                 $selected = $this->selected(empty($params[$this->editorKey.'_skin']));
-                $option[] = '<option value=""' . $selected . '>' . $this->lang('mce_theme_global_settings') . '</option>';
+                $option[] = '<option value=""' . $selected . '>' . $this->lang('theme_global_settings') . '</option>';
                 break;
         }
         foreach(glob("{$skinDir}*",GLOB_ONLYDIR) as $dir)
@@ -465,23 +500,35 @@ class modxRTEbridge
         return is_array( $option ) ? implode("\n",$option) : '<!-- '. $this->editorKey .': No skins found -->';
     }
     
-    public function lang($key='')
+    public function lang($key='', $returnNull=false)
     {
         global $modx;
         
         if(!$key) return;
-        
-        $lang_name = $modx->config['manager_language'];
-        $lang_path = $this->pluginParams['base_path'] . "lang/{$lang_name}.inc.php";
-        
-        if(is_file($lang_path)) include_once($lang_path);
-        
-        if(isset($_lang[$key])) return $_lang[$key];
-        else {
-            include_once($this->pluginParams['base_path'] . 'lang/english.inc.php');
-            if(isset($_lang[$key])) return $_lang[$key];
-            else                    return '';
-        }
+
+        // Init langArray once
+        if(empty( $this->langArr )) {
+            $lang_name = $modx->config['manager_language'];
+            $lang_path = $this->pluginParams['base_path'] . "lang/{$lang_name}.inc.php";
+            $fallback  = $this->pluginParams['base_path'] . 'lang/english.inc.php';
+            $lang_code = '';
+
+            // Load user language
+            if(is_file($lang_path)) include_once($lang_path);
+            if(isset($_lang['lang_code'])) $lang_code = $_lang['lang_code'];    // Set langcode for RTE
+
+            // Load fallback translations (show at least english instead of empty)
+            if(is_file($fallback))  include_once($fallback);
+            if(empty( $lang_code )) $lang_code = $_lang['lang_code'];
+
+            $this->langArr = $_lang;
+
+            $this->langArr['lang_code'] = $lang_code;
+        };
+
+        if(isset( $this->langArr[$key] )) return $this->langArr[$key];
+
+        return $returnNull ? NULL : 'lang_'.$key;    // Show missing key as fallback
     }
     
     public function selected($cond = false)
