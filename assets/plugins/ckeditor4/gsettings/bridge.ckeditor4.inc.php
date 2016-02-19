@@ -167,6 +167,16 @@ $bridgeParams = array(
         };
     },
 
+    // Prepare Ressources-Content or Chunks for Template-Button
+    'template_button' => function () {
+        // http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Templates
+        if( !empty( $this->modxParams['template_docs'] )) {
+            $docsArr = explode(',', $this->modxParams['template_docs']);
+            $this->set('templates_files', array($this->pluginParams['base_url'].'connector.ckeditor4.templates.php'), 'array');
+        };
+
+    },
+
     // Handles customSetting "maxHeight" as example
     'resize_maxHeight' => function () {
         // http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-resize_maxHeight
@@ -174,7 +184,7 @@ $bridgeParams = array(
             $maxHeight = $this->onlyNumbers( $this->modxParams['maxHeight'] );
             $this->set('resize_maxHeight', $maxHeight, 'string');
         };
-    },
+    }
 );
 
 // Custom settings to show below Modx- / user-configuration
