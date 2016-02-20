@@ -17,6 +17,7 @@ class modxRTEbridge
     public $customSettings  = array();      // Holds custom settings to enable setting via Modx- / user-configuration
     public $defaultValues   = array();      // Holds default values for settings
     public $langArr         = array();      // Holds lang strings
+    public $forcedSettings  = array();      // Holds values of settings set via force()
 
     public function __construct($editorKey=NULL, $theme='' )
     {
@@ -103,7 +104,7 @@ class modxRTEbridge
         $this->pluginParams['base_url']         = $baseUrl;
     }
 
-    // Function to override parameters from Plugin-Configuration
+    // Function to set editor-parameters
     // $value = NULL deletes key completely from editor-config
     public function set( $key, $value, $type=false, $emptyAllowed=NULL )
     {
@@ -122,6 +123,13 @@ class modxRTEbridge
 
             $this->pluginParams[$key] = $value !== '' ? $value : $default;
         }
+    }
+
+    // Function to force editor-setting via plugin-code, same handling as set()
+    public function force( $key, $value, $type=false, $emptyAllowed=NULL )
+    {
+        $this->forcedSettings[$key] = $value;
+        $this->set( $key, $value, $type, $emptyAllowed );
     }
 
     // Function to append string to existing parameters
@@ -164,17 +172,12 @@ class modxRTEbridge
         $modxParams = $this->modxParams;    // For use in themes
         $ph = array();
 
-        // Catch params already set within plugin
-        $pluginParams = $this->pluginParams;
-        $themeConfig = $this->themeConfig;  // Catch nulled params
-
         // Load theme for user or webuser
         if($modx->isBackend() || (intval($_GET['quickmanagertv']) == 1 && isset($_SESSION['mgrValidated']))) {
             // User is logged into Manager
             // Load base first to assure Modx settings like entermode, editor_css_path are given set, can be overwritten in custom theme
             include("{$this->pluginParams['base_path']}theme/theme.{$this->editorKey}.base.inc.php");
-            if( $this->theme != 'default' )
-                include("{$this->pluginParams['base_path']}theme/theme.{$this->editorKey}.{$this->theme}.inc.php");
+            include("{$this->pluginParams['base_path']}theme/theme.{$this->editorKey}.{$this->theme}.inc.php");
             $this->pluginParams['language'] = !isset($this->pluginParams['language']) ? $this->lang('lang_code') : $this->pluginParams['language'];
         } else {
             // User is a webuser
@@ -186,9 +189,8 @@ class modxRTEbridge
             $this->pluginParams['language'] = !isset($this->pluginParams['language']) ? $this->lang('lang_code') : $this->pluginParams['language'];
         }
 
-        // Now merge back plugin-settings
-        $this->pluginParams = array_merge($this->pluginParams, $pluginParams);
-        $this->themeConfig = array_merge($this->themeConfig, $themeConfig);
+        // Now merge forced settings
+        $this->pluginParams = array_merge($this->pluginParams, $this->forcedSettings);
 
         // Prepare config output
         $ph['configJs'] = $this->renderConfigString();
