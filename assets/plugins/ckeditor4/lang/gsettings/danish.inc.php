@@ -1,14 +1,14 @@
 <?php
 /**
- * Function:       English language file for Modx Richtext
- * Encoding:       ISO-Latin-1
- * Author:         Jeff Whitfield, yama, Deesen
+ * Function:       Danish language file for custom settings
+ * Encoding:       UTF-8
+ * Author:
  * Date:           2016/02/19
  * Version:        4.5.7.0
  * MODX version:   0.9.5-1.1
-*/
+ */
 
-$_lang['lang_code'] = 'en';
+$_lang['lang_code'] = 'da';
 $_lang['editor_theme_title'] = 'Theme';
 $_lang['editor_theme_message'] = 'Here you can select which theme or skin to use with the editor.';
 $_lang['editor_custom_plugins_title'] = 'Custom Plugins';
@@ -39,18 +39,9 @@ $_lang['element_format_message'] = 'This option enables control if elements shou
 $_lang['schema_title'] = 'Schema';
 $_lang['schema_message'] = 'The schema option enables you to switch between the HTML4 and HTML5 schema. This controls the valid elements and attributes that can be placed in the HTML. This value can either be the default html4 or html5.';
 
-$_lang['toolbar1_msg'] = 'Default: undo,redo,|,bold,forecolor,backcolor,strikethrough,formatselect,fontsizeselect, pastetext,pasteword,code,|,fullscreen,help';
-$_lang['toolbar2_msg'] = 'Default: image,media,link,unlink,anchor,|,justifyleft,justifycenter,justifyright,|,bullist, numlist,|,blockquote,outdent,indent,|,table,hr,|,template,visualblocks,styleprops,removeformat';
-
 $_lang['tpl_title'] = 'Template Button';
 $_lang['tpl_msg'] = 'You could define templates on chunk or ressource base for the template button in [+editorLabel+] (won\'t be displayed by default). The content of the chunk/of the resource will be inserted at the cursor position as html code in [+editorLabel+]. Multiple chunk names or ressource IDs have to be separated by comma.';
 $_lang['tpl_docid'] = 'Resource IDs';
 $_lang['tpl_chunkname'] = 'Chunk Names';
 
-$_lang['default'] = 'Default: ';
-$_lang['maxHeight_title'] = 'Max-Height';
-$_lang['maxHeight_message'] = 'Set maximum height without px like 400.';
-
-$_lang['editor_css_selectors_schema'] = 'Title==Tag==CSS-Class';
-$_lang['editor_css_selectors_example'] = 'Mono==pre==mono||Small Text==span==small';
-$_lang['editor_css_selectors_separator'] = '||';
+$_lang['default'] = 'Default:&nbsp;';
