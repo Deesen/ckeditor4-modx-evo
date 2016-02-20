@@ -32,6 +32,9 @@ class modxRTEbridge
             $baseUrl    = MODX_BASE_URL . $path;
         } else exit('modxRTEbridge: Path-Error');
 
+        // Init language before bridge so bridge can alter translations via $this->setLang()
+        $this->initLang($basePath);
+
         // Get modxRTEbridge-config
         if ( is_readable("{$basePath}gsettings/bridge.{$editorKey}.inc.php")) {
             include("{$basePath}gsettings/bridge.{$editorKey}.inc.php");
@@ -148,7 +151,7 @@ class modxRTEbridge
 
         $elements = explode(',', $str);
         foreach($elements as $key=>$val) {
-            $elements[$key] = $quote.$val.$quote;
+            $elements[$key] = $quote.trim($val).$quote;
         };
         return implode(',', $elements);
     }
@@ -383,7 +386,7 @@ class modxRTEbridge
             $row['messageVal']  = !empty( $row['messageVal'] ) ? $row['messageVal'] : '';
 
             // Prepare displaying of default values
-            $row['default'] = isset( $this->defaultValues[$name] ) ? '<span class="default-val" style="margin:0.5em 0;float:right;">'. $this->lang('default') .'<i>'.$this->defaultValues[$name].'</i></span>' : '';
+            $row['default'] = isset( $this->defaultValues[$name] ) ? '<span class="default-val" style="margin:0.5em 0;float:left;">'. $this->lang('default') .'<i>'.$this->defaultValues[$name].'</i></span>' : '';
 
             // Enable nested parsing
             $output         = $modx->parseText($settingsRowTpl, $row); // Replace general translations
@@ -503,36 +506,60 @@ class modxRTEbridge
 
         return is_array( $option ) ? implode("\n",$option) : '<!-- '. $this->editorKey .': No skins found -->';
     }
-    
+
+    // Get translation
     public function lang($key='', $returnNull=false)
     {
         global $modx;
         
         if(!$key) return;
 
-        // Init langArray once
-        if(empty( $this->langArr )) {
-            $lang_name = $modx->config['manager_language'];
-            $lang_path = $this->pluginParams['base_path'] . "lang/{$lang_name}.inc.php";
-            $fallback  = $this->pluginParams['base_path'] . 'lang/english.inc.php';
-            $lang_code = '';
-
-            // Load user language
-            if(is_file($lang_path)) include_once($lang_path);
-            if(isset($_lang['lang_code'])) $lang_code = $_lang['lang_code'];    // Set langcode for RTE
-
-            // Load fallback translations (show at least english instead of empty)
-            if(is_file($fallback))  include_once($fallback);
-            if(empty( $lang_code )) $lang_code = $_lang['lang_code'];
-
-            $this->langArr = $_lang;
-
-            $this->langArr['lang_code'] = $lang_code;
-        };
-
         if(isset( $this->langArr[$key] )) return $this->langArr[$key];
 
         return $returnNull ? NULL : 'lang_'.$key;    // Show missing key as fallback
+    }
+    // Init translations
+    public function initLang($basePath)
+    {
+        global $modx;
+
+        // Init langArray once
+        if(empty( $this->langArr )) {
+            $lang_name      = $modx->config['manager_language'];
+            $gsettings_path = $basePath . "lang/gsettings/";     // Holds general translations
+            $custom_path    = $basePath . "lang/custom/";        // Holds custom translations
+            $lang_file      = $lang_name .'.inc.php';
+            $fallback_file  = 'english.inc.php';
+            $lang_code      = '';
+
+            // Load gsettings fallback language (show at least english translations instead of empty)
+            if(is_file($gsettings_path.$fallback_file)) include($gsettings_path.$fallback_file);
+            if(isset($_lang['lang_code'])) $lang_code = $_lang['lang_code'];    // Set langcode for RTE
+
+            // Load gsettings user language
+            if(is_file($custom_path.$fallback_file)) include($custom_path.$fallback_file);
+            if(isset($_lang['lang_code'])) $lang_code = $_lang['lang_code'];    // Set langcode for RTE
+
+            // Load custom settings fallback language
+            if(is_file($gsettings_path.$lang_file)) include($gsettings_path.$lang_file);
+            if(isset($_lang['lang_code'])) $lang_code = $_lang['lang_code'];    // Set langcode for RTE
+
+            // Load custom settings user language
+            if(is_file($custom_path.$lang_file)) include($custom_path.$lang_file);
+            if(isset($_lang['lang_code'])) $lang_code = $_lang['lang_code'];    // Set langcode for RTE
+
+            $this->langArr = $_lang;
+            $this->langArr['lang_code'] = $lang_code;
+        };
+    }
+    // Set new/overwrite translations manually (via bridge)
+    public function setLang($key, $string, $overwriteExisting=false)
+    {
+        if( is_array($string)) {
+            $this->langArr = $overwriteExisting == false ? array_merge($this->langArr, $string) : array_merge($string, $this->langArr);
+        } else {
+            $this->langArr[$key] = isset($this->langArr[$key]) && $overwriteExisting == false ? $this->langArr[$key] : $string;
+        };
     }
     
     public function selected($cond = false)
