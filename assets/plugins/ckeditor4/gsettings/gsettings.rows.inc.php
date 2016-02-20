@@ -54,9 +54,9 @@ $settingsRows = array(
         'title'=>'editor_custom_buttons_title',
         'configTpl'=>'
                   Row 1: <textarea class="inputBox mce" name="[+name+]1">[+[+editorKey+]_custom_buttons1+]</textarea>
-                  <div>[+toolbar1_msg+]</div>
+                  <div>[+editor_custom_buttons1_msg+]</div>
                   Row 2: <textarea class="inputBox mce" name="[+name+]2">[+[+editorKey+]_custom_buttons2+]</textarea>
-                  <div>[+toolbar2_msg+]</div>
+                  <div>[+editor_custom_buttons2_msg+]</div>
                   Row 3: <textarea class="inputBox mce" name="[+name+]3">[+[+editorKey+]_custom_buttons3+]</textarea>
                   Row 4: <textarea class="inputBox mce" name="[+name+]4">[+[+editorKey+]_custom_buttons4+]</textarea>',
         'message'=>'editor_custom_buttons_message'
