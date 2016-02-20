@@ -20,6 +20,7 @@
 if( !empty( $this->modxParams['custom_plugins'])) {
     $this->set('plugins', $this->modxParams['custom_plugins'], 'string' );
 };
+$this->set('extraPlugins', 'templates', 'string' );  // Assure plugin "templates" is loaded
 
 $this->set('toolbar',         '[
                 { name: "row1",     items: [ '. $this->addQuotesToCommaList( $this->modxParams['custom_buttons1'] ) .' ]},

@@ -35,12 +35,13 @@ if( !empty( $modx->config['editor_css_path'] )) {
     $this->set('contentsCss', $modx->config['editor_css_path'], 'string');
 }
 
-$this->set('skin',                  'moono',                        'string' );   // Set default
+$this->set('language',              $this->lang('lang_code'),       'string' );   // Set default language
+$this->set('skin',                  'moono',                        'string' );   // Set default skin
 $this->set('skin',                  $modxParams['skin'] );                        // Overwrite with Modx-setting
 $this->set('enterMode',             'p',                            'constant' ); // Translated via bridge.ckeditor4.inc.php
-$this->set('width',                 $pluginParams['width'],           'string' );
-$this->set('height',                $pluginParams['height'],          'string' );
-$this->set('extraPlugins',          'dialogadvtab,tableresize,stylescombo,embed,showborders,nbsp', 'string', true );
+$this->set('width',                 $pluginParams['width'],         'string' );   // Set width as per plug-configuration
+$this->set('height',                $pluginParams['height'],        'string' );   // Set width as per plug-configuration
+$this->set('extraPlugins',          'dialogadvtab,tableresize,stylescombo,embed,showborders,nbsp', 'string', true );    // Enhance default-plugin-setup
 
 // Filebrowser config
 $this->set('filebrowserBrowseUrl', 'media/browser/mcpuk/browse.php?opener=ckeditor4&type=files', 'string');
