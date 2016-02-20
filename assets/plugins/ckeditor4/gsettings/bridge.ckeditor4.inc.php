@@ -206,6 +206,18 @@ $defaultValues = array(
     'entermode' => 'p',
     'element_format' => 'xhtml',
     'schema' => 'html5',
-    'maxHeight' => '800'
+    'maxHeight' => '800',
+    'custom_plugins'=>'',
+    'custom_buttons1'=>'Undo,Redo,Bold,TextColor,BGColor,Strike,Format,FontSize,PasteText,PasteFromWord,Source,Maximize,About',
+    'custom_buttons2'=>'Image,Embed,Link,Unlink,Anchor,JustifyLeft,JustifyCenter,JustifyRight,BulletedList,NumberedList,Blockquote,Outdent,Indent,Table,HorizontalRule,Templates,ShowBlocks,RemoveFormat'
 );
+
+// Add translation for monolingual custom-messages with $this->setLang( key, string, overwriteExisting=false )
+$this->setLang('editor_custom_buttons1_msg', '<div style="width:70vw;word-wrap:break-word;overflow-wrap:break-word;">[+default+]<i>'.$defaultValues['custom_buttons1'].'</i></div>' );
+$this->setLang('editor_custom_buttons2_msg', '<div style="width:70vw;word-wrap:break-word;overflow-wrap:break-word;">[+default+]<i>'.$defaultValues['custom_buttons2'].'</i></div>' );
+$this->setLang('editor_css_selectors_schema', 'Title==Tag==CSS-Class');
+$this->setLang('editor_css_selectors_example', 'Mono==pre==mono||Small Text==span==small');
+$this->setLang('editor_css_selectors_separator', '||');
+
 ?>
+
