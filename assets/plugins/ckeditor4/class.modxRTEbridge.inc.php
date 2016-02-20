@@ -454,6 +454,8 @@ class modxRTEbridge
             $label = $this->lang("theme_{$theme}", true) ? $this->lang("theme_{$theme}") : $theme; // Get optional translation or show raw themeKey
             $selected = $this->selected($theme == $this->modxParams['theme']);
 
+            $label = $modx->parseText( $label, $this->pluginParams );   // Enable [+editorLabel+] in options-label
+
             $option[] = '<option value="' . $theme . '"' . $selected . '>' . "{$label}</option>";
         }
 
