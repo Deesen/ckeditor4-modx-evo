@@ -17,8 +17,11 @@
  * Check theme.ckeditor4.base.inc.php for more examples
  * */
 
+// Will be overwritten by force() within plugin-code
 $this->set('height',            '200px',    'string' );
 $this->set('width',             '200px',    'string' );
+
+// Mini-set of buttons
 $this->set('toolbarGroups',     '[
                 {"name":"basicstyles","groups":["basicstyles"]}
             ]', 'json' );

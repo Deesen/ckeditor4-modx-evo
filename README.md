@@ -28,6 +28,7 @@ Manual installation of plugin `assets/plugins/ckeditor4/plugin.ckeditor4.php`:
     
 ##### @todo:
   - add linklist/quicksearch to link-dialog (internal links can already be created by choosing from Modx ressource-tree)
+  - templates-button: set previewimages-path via custom configuration 
   - check inline @todos
 
 ##### History:
