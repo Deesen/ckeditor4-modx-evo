@@ -5,8 +5,10 @@ Ready for production. All settings and configurations are adapted to the old Mod
   - Filebrowser / KCfinder integrated for images, flash and files
   - CKEditor-plugin "embed" for media-files
   - Easy link-creation by choosing from Modx ressource-tree
+  - Insert templates/chunks with template-button
   - Webuser- / custom-template handling as per TinyMCE3
   - Settings via Modx- / user- and plugin-configuration
+  - Multilanguage-Support
 
 ------------------------------------------------------------------------------
 
@@ -25,12 +27,15 @@ Manual installation of plugin `assets/plugins/ckeditor4/plugin.ckeditor4.php`:
 ------------------------------------------------------------------------------
     
 ##### @todo:
-  - add linklist to link-button (URLS can already be created choosing from Modx ressource-tree)
-  - customize all language-files
-  - add optional modx-langKey to editor-langKey translation to bridge?
+  - add linklist/quicksearch to link-dialog (internal links can already be created by choosing from Modx ressource-tree)
   - check inline @todos
 
 ##### History:
+  - 20.02.2016:
+    - added language-support to bridge for gsettings/custom
+    - added language files from old TinyMCE3
+      - modified lang.gsettings for general settings
+      - prepared lang.custom for future translations
   - 19.02.2016: 
     - Finished themes / plugin / settings
     - added connector.template to support template-button for inserting ressources and chunks
