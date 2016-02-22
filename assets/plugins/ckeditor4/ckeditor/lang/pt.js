@@ -5,6 +5,10 @@
 CKEDITOR.lang['pt'] = {
     "editor": "Editor de texto enriquecido",
     "editorPanel": "Painel do editor de texto enriquecido",
+    "modx": {
+        "modxLink":"Modx-Internal",
+        "chooseRessource":"You can also choose a ressource<br/>directly from Modx-tree."
+    },
     "common": {
         "editorHelp": "Pressione ALT+0 para ajuda",
         "browseServer": "Navegar no servidor",

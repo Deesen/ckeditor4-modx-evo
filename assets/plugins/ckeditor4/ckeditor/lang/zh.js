@@ -5,6 +5,10 @@
 CKEDITOR.lang['zh'] = {
     "editor": "RTF 編輯器",
     "editorPanel": "RTF 編輯器面板",
+    "modx": {
+        "modxLink":"Modx-Internal",
+        "chooseRessource":"You can also choose a ressource<br/>directly from Modx-tree."
+    },
     "common": {
         "editorHelp": "按下 ALT 0 取得說明。",
         "browseServer": "瀏覽伺服器",

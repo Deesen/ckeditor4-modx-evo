@@ -5,6 +5,10 @@
 CKEDITOR.lang['bg'] = {
     "editor": "Текстов редактор за форматиран текст",
     "editorPanel": "Панел на текстовия редактор",
+    "modx": {
+        "modxLink":"Modx-Internal",
+        "chooseRessource":"You can also choose a ressource<br/>directly from Modx-tree."
+    },
     "common": {
         "editorHelp": "натиснете ALT 0 за помощ",
         "browseServer": "Избор от сървъра",

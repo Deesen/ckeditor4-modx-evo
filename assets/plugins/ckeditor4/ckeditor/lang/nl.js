@@ -5,6 +5,10 @@
 CKEDITOR.lang['nl'] = {
     "editor": "Tekstverwerker",
     "editorPanel": "Tekstverwerker beheerpaneel",
+    "modx": {
+        "modxLink":"Modx-Internal",
+        "chooseRessource":"You can also choose a ressource<br/>directly from Modx-tree."
+    },
     "common": {
         "editorHelp": "Druk ALT 0 voor hulp",
         "browseServer": "Bladeren op server",

@@ -5,6 +5,10 @@
 CKEDITOR.lang['de-ch'] = {
     "editor": "WYSIWYG-Editor",
     "editorPanel": "WYSIWYG-Editor-Leiste",
+    "modx": {
+        "modxLink":"Modx-Intern",
+        "chooseRessource":"Sie können auch eine Ressource direkt<br/>aus dem Modx-Baum auswählen."
+    },
     "common": {
         "editorHelp": "Drücken Sie ALT 0 für Hilfe",
         "browseServer": "Server durchsuchen",

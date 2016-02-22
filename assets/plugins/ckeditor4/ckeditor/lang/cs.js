@@ -5,6 +5,10 @@
 CKEDITOR.lang['cs'] = {
     "editor": "Textový editor",
     "editorPanel": "Panel textového editoru",
+    "modx": {
+        "modxLink":"Modx-Internal",
+        "chooseRessource":"You can also choose a ressource<br/>directly from Modx-tree."
+    },
     "common": {
         "editorHelp": "Stiskněte ALT 0 pro nápovědu",
         "browseServer": "Vybrat na serveru",

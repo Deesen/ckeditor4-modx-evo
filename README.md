@@ -8,6 +8,7 @@ Ready for production. All settings and configurations are adapted to the old Mod
   - Insert templates/chunks with template-button
   - Webuser- / custom-template handling as per TinyMCE3
   - Settings via Modx- / user- and plugin-configuration
+  - "Unlimited" themes can be created
   - Multilanguage-Support
 
 ------------------------------------------------------------------------------
@@ -29,6 +30,8 @@ Manual installation of plugin `assets/plugins/ckeditor4/plugin.ckeditor4.php`:
 ##### @todo:
   - add linklist/quicksearch to link-dialog (internal links can already be created by choosing from Modx ressource-tree)
   - templates-button: set previewimages-path via custom configuration 
+  - add 2 example preview-images
+  - prepare screenshots
   - check inline @todos
 
 ##### History:

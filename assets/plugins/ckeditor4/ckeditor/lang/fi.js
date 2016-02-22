@@ -5,6 +5,10 @@
 CKEDITOR.lang['fi'] = {
     "editor": "Rikastekstieditori",
     "editorPanel": "Rikastekstieditoripaneeli",
+    "modx": {
+        "modxLink":"Modx-Internal",
+        "chooseRessource":"You can also choose a ressource<br/>directly from Modx-tree."
+    },
     "common": {
         "editorHelp": "Paina ALT 0 nähdäksesi ohjeen",
         "browseServer": "Selaa palvelinta",

@@ -5,6 +5,10 @@
 CKEDITOR.lang['da'] = {
     "editor": "Rich Text Editor",
     "editorPanel": "Rich Text Editor panel",
+    "modx": {
+        "modxLink":"Modx-Internal",
+        "chooseRessource":"You can also choose a ressource<br/>directly from Modx-tree."
+    },
     "common": {
         "editorHelp": "Tryk ALT 0 for hjælp",
         "browseServer": "Gennemse...",

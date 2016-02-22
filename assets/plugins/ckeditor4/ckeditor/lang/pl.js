@@ -5,6 +5,10 @@
 CKEDITOR.lang['pl'] = {
     "editor": "Edytor tekstu sformatowanego",
     "editorPanel": "Panel edytora tekstu sformatowanego",
+    "modx": {
+        "modxLink":"Modx-Internal",
+        "chooseRessource":"You can also choose a ressource<br/>directly from Modx-tree."
+    },
     "common": {
         "editorHelp": "W celu uzyskania pomocy naciśnij ALT 0",
         "browseServer": "Przeglądaj",

@@ -5,6 +5,10 @@
 CKEDITOR.lang['ru'] = {
     "editor": "Визуальный текстовый редактор",
     "editorPanel": "Визуальный редактор текста",
+    "modx": {
+        "modxLink":"Modx-Internal",
+        "chooseRessource":"You can also choose a ressource<br/>directly from Modx-tree."
+    },
     "common": {
         "editorHelp": "Нажмите ALT-0 для открытия справки",
         "browseServer": "Выбор на сервере",

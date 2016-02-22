@@ -5,6 +5,10 @@
 CKEDITOR.lang['fa'] = {
     "editor": "ویرایش‌گر متن غنی",
     "editorPanel": "پنل ویرایشگر متن غنی",
+    "modx": {
+        "modxLink":"Modx-Internal",
+        "chooseRessource":"You can also choose a ressource<br/>directly from Modx-tree."
+    },
     "common": {
         "editorHelp": "کلید Alt+0 را برای راهنمایی بفشارید",
         "browseServer": "فهرست​نمایی سرور",

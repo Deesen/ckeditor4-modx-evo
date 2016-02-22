@@ -5,6 +5,10 @@
 CKEDITOR.lang['nb'] = {
     "editor": "Rikteksteditor",
     "editorPanel": "Panel for rikteksteditor",
+    "modx": {
+        "modxLink":"Modx-Internal",
+        "chooseRessource":"You can also choose a ressource<br/>directly from Modx-tree."
+    },
     "common": {
         "editorHelp": "Trykk ALT 0 for hjelp",
         "browseServer": "Bla gjennom tjener",

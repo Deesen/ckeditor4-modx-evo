@@ -5,6 +5,10 @@
 CKEDITOR.lang['zh-cn'] = {
     "editor": "所见即所得编辑器",
     "editorPanel": "所见即所得编辑器面板",
+    "modx": {
+        "modxLink":"Modx-Internal",
+        "chooseRessource":"You can also choose a ressource<br/>directly from Modx-tree."
+    },
     "common": {
         "editorHelp": "按 ALT+0 获得帮助",
         "browseServer": "浏览服务器",

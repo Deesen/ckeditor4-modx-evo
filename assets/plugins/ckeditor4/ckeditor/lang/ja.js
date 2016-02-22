@@ -5,6 +5,10 @@
 CKEDITOR.lang['ja'] = {
     "editor": "リッチテキストエディタ",
     "editorPanel": "リッチテキストエディタパネル",
+    "modx": {
+        "modxLink":"Modx-Internal",
+        "chooseRessource":"You can also choose a ressource<br/>directly from Modx-tree."
+    },
     "common": {
         "editorHelp": "ヘルプは ALT 0 を押してください",
         "browseServer": "サーバブラウザ",
