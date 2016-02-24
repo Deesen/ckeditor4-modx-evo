@@ -6,8 +6,8 @@ CKEDITOR.lang['nl'] = {
     "editor": "Tekstverwerker",
     "editorPanel": "Tekstverwerker beheerpaneel",
     "modx": {
-        "modxLink":"Modx-Internal",
-        "chooseRessource":"You can also choose a ressource<br/>directly from Modx-tree."
+        "modxLink":"Interne MODX pagina",
+        "chooseRessource":"U kunt ook een pagina selecteren <br>direct uit de MODX boomstructuur."
     },
     "common": {
         "editorHelp": "Druk ALT 0 voor hulp",
@@ -35,7 +35,7 @@ CKEDITOR.lang['nl'] = {
         "langDirRtl": "Rechts naar links (RTL)",
         "langCode": "Taalcode",
         "longDescr": "Lange URL-omschrijving",
-        "cssClass": "Stylesheet-klassen",
+        "cssClass": "Stylesheet classes",
         "advisoryTitle": "Adviserende titel",
         "cssStyle": "Stijl",
         "ok": "OK",
@@ -57,7 +57,7 @@ CKEDITOR.lang['nl'] = {
         "langDirLTR": "Links naar rechts (LTR)",
         "langDirRTL": "Rechts naar links (RTL)",
         "styles": "Stijl",
-        "cssClasses": "Stylesheet-klassen",
+        "cssClasses": "Stylesheet classes",
         "width": "Breedte",
         "height": "Hoogte",
         "align": "Uitlijning",
