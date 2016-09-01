@@ -13,10 +13,10 @@
  * (1) http://ckeditor.com/builder
  *     Visit online builder to build CKEditor from scratch.
  *
- * (2) http://ckeditor.com/builder/bb6a0887f857d8cdbe5dae4397f592d7
+ * (2) http://ckeditor.com/builder/46a5439fa9699f32a164c93272cb7249
  *     Visit online builder to build CKEditor, starting with the same setup as before.
  *
- * (3) http://ckeditor.com/builder/download/bb6a0887f857d8cdbe5dae4397f592d7
+ * (3) http://ckeditor.com/builder/download/46a5439fa9699f32a164c93272cb7249
  *     Straight download link to the latest version of CKEditor (Optimized) with the same setup as before.
  *
  * NOTE:
@@ -56,9 +56,7 @@ var CKBUILDER_CONFIG = {
 		'blockquote' : 1,
 		'clipboard' : 1,
 		'contextmenu' : 1,
-		'dialogadvtab' : 1,
 		'elementspath' : 1,
-		'embed' : 1,
 		'enterkey' : 1,
 		'entities' : 1,
 		'filebrowser' : 1,
@@ -72,7 +70,6 @@ var CKBUILDER_CONFIG = {
 		'list' : 1,
 		'magicline' : 1,
 		'maximize' : 1,
-		'nbsp' : 1,
 		'pastefromword' : 1,
 		'pastetext' : 1,
 		'removeformat' : 1,
@@ -84,18 +81,19 @@ var CKBUILDER_CONFIG = {
 		'stylescombo' : 1,
 		'tab' : 1,
 		'table' : 1,
-		'tableresize' : 1,
 		'tabletools' : 1,
+		'templates' : 1,
 		'toolbar' : 1,
 		'undo' : 1,
 		'wsc' : 1,
-		'wysiwygarea' : 1,
-		'xml' : 1
+		'wysiwygarea' : 1
 	},
 	languages : {
+		'bg' : 1,
 		'cs' : 1,
 		'da' : 1,
 		'de' : 1,
+		'de-ch' : 1,
 		'en' : 1,
 		'es' : 1,
 		'fa' : 1,
@@ -104,12 +102,15 @@ var CKBUILDER_CONFIG = {
 		'he' : 1,
 		'it' : 1,
 		'ja' : 1,
+		'nb' : 1,
 		'nl' : 1,
 		'no' : 1,
 		'pl' : 1,
 		'pt' : 1,
 		'pt-br' : 1,
 		'ru' : 1,
-		'sv' : 1
+		'sv' : 1,
+		'zh' : 1,
+		'zh-cn' : 1
 	}
 };
