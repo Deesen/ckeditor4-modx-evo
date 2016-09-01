@@ -1,4 +1,4 @@
-## ckeditor4-modx-evo v4.5.7.0
+## ckeditor4-modx-evo v4.5.10
 
 Ready for production. All settings and configurations are adapted to the old Modx/TinyMCE3-settings as good as possible
 
@@ -19,11 +19,8 @@ Manual installation of plugin `assets/plugins/ckeditor4/plugin.ckeditor4.php`:
   - In Modx Manager go to Elements -> Plugins and create new plugin
   - Name it "CKEditor4"
   - Paste content of file `assets/plugins/ckeditor4/plugin.ckeditor4.php` into Modx Plugin-Code
-  - Set system-events `OnRichTextEditorRegister, OnRichTextEditorInit, OnInterfaceSettingsRender`
+  - Set system-events `OnLoadWebDocument,OnParseDocument,OnWebPagePrerender,OnLoadWebPageCache,OnRichTextEditorRegister,OnRichTextEditorInit,OnInterfaceSettingsRender`
   - Save new plugin
-  - Optional for "richtextmini" (not yet merged into Modx 1.1RC): Same steps as above BUT
-    - Name it "CKEditor4 Mini"
-    - Paste content of file `assets/plugins/ckeditor4/plugin.ckeditor4_mini.php` into Modx Plugin-Code
   
 ------------------------------------------------------------------------------
     
@@ -35,6 +32,11 @@ Manual installation of plugin `assets/plugins/ckeditor4/plugin.ckeditor4.php`:
   - check inline @todos
 
 ##### History:
+  - 01.09.2016:
+    - updated using latest modxRTEbridge
+    - new feature: Frontend / Inline-Edit
+    - new feature: Introtext-RTE
+    - updated to CKEditor 4.5.10
   - 20.02.2016:
     - added language-support to bridge for gsettings/custom
     - added language files from old TinyMCE3

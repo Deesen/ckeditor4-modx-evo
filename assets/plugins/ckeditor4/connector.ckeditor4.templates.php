@@ -1,72 +1,32 @@
 <?php
-// Get Template from resource for CKEditor4
-// Based on get_template.php for TinyMCE3 by Yamamoto
-//
-// Changelog:
-// @author Deesen / updated: 19.02.2016
+// Get Template from resource for ckeditor4
 
-// Config options
-// $templates_to_ignore = array();        // Template IDs to ignore from the link list
-// $include_page_ids = false;
-// $charset = 'UTF-8';
-// $sortby = 'menuindex'; // Could be menuindex or menutitle
-// $limit = 0;
-$imagesPath = 'assets/plugins/ckeditor4/images/';
-
-/* That's it to config! */
-define('MODX_API_MODE', true);
-define('IN_MANAGER_MODE', "true");
 $self = 'assets/plugins/ckeditor4/connector.ckeditor4.templates.php';
 $base_path = str_replace($self, '', str_replace('\\', '/', __FILE__));
+
+define('MODX_API_MODE','true');
+define('IN_MANAGER_MODE','true');
 include_once("{$base_path}index.php");
-$modx->db->connect();
+if( !file_exists(MODX_BASE_PATH."assets/lib/class.modxRTEbridge.php")) { // Add Fall-Back for now
+	require_once(MODX_BASE_PATH."assets/plugins/ckeditor4/class.modxRTEbridge.php");
+} else {
+	require_once(MODX_BASE_PATH."assets/lib/class.modxRTEbridge.php");
+}
+require_once(MODX_BASE_PATH."assets/plugins/ckeditor4/bridge.ckeditor4.inc.php");
 
-/* only display if manager user is logged in */
-if ($modx->getLoginUserType() === 'manager') {
+$bridge = new ckeditor4bridge();
 
-    $modx->getSettings();
-    $ids    = $modx->config['ckeditor4_template_docs'];
-    $chunks = $modx->config['ckeditor4_template_chunks'];
-    $templatesArr = array();
+$templatesList = $bridge->getTemplateChunkList();    // $templatesArr could be modified/bridged now for different editors before sending
+$templatesArr = array();
 
-    if (!empty($ids)) {
-        $docs = $modx->getDocuments($ids, 1, 0, $fields = 'id,pagetitle,menutitle,description,content');
-        foreach ($docs as $i => $a) {
-            $newTemplate = array(
-                'title'=>($docs[$i]['menutitle'] !== '') ? $docs[$i]['menutitle'] : $docs[$i]['pagetitle'],
-                'image'=>'res_'. $docs[$i]['id'] .'.png',   // @todo: Enable set image via HTML-Comments, and strip comments then?
-                'description'=>$docs[$i]['description'],
-                'html'=>$docs[$i]['content']
-            );
-            $templatesArr[] = $newTemplate;
-        }
-    }
-
-    if (!empty($chunks)) {
-        $tbl_site_htmlsnippets = $modx->getFullTableName('site_htmlsnippets');
-        if (strpos($chunks, ',') !== false) {
-            $chunks  = array_filter(array_map('trim', explode(',', $chunks)));
-            $chunks  = $modx->db->escape($chunks);
-            $chunks  = implode("','", $chunks);
-            $where   = "`name` IN ('{$chunks}')";
-            $orderby = "FIELD(name, '{$chunks}')";
-        } else {
-            $where   = "`name`='{$chunks}'";
-            $orderby = '';
-        }
-
-        $rs = $modx->db->select('id,name,description,snippet', $tbl_site_htmlsnippets, $where, $orderby);
-
-        while ($row = $modx->db->getRow($rs)) {
-            $newTemplate = array(
-                'title'=>$row['name'],
-                'image'=>'chunk_'. $row['name'] .'.png',    // @todo: Enable set image via HTML-Comments, and strip comments then?
-                'description'=>$row['description'],
-                'html'=>$row['snippet']
-            );
-            $templatesArr[] = $newTemplate;
-        }
-    }
+foreach($templatesList as $row) {
+	$newTemplate = array(
+		'title'=>$row['title'],
+		'image'=>'chunk_'. $row['title'] .'.png',    // @todo: Enable set image via HTML-Comments, and strip comments then?
+		'description'=>$row['description'],
+		'html'=>$row['content']
+	);
+	$templatesArr[] = $newTemplate;
 }
 
 if (0 < count($templatesArr)) {
@@ -80,5 +40,3 @@ if (0 < count($templatesArr)) {
         templates: ". json_encode($templatesArr) ."
     });";
 };
-
-?>
