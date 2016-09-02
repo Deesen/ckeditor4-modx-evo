@@ -44,9 +44,9 @@ $this->set('height',                $pluginParams['height'],        'string' ); 
 $this->set('extraPlugins',          'dialogadvtab,tableresize,stylescombo,embed,showborders,nbsp', 'string', true );    // Enhance default-plugin-setup
 
 // Filebrowser config
-$this->set('filebrowserBrowseUrl', 'media/browser/mcpuk/browse.php?opener=ckeditor4&type=files', 'string');
-$this->set('filebrowserImageBrowseUrl', 'media/browser/mcpuk/browse.php?opener=ckeditor4&type=images', 'string');
-$this->set('filebrowserFlashBrowseUrl', 'media/browser/mcpuk/browse.php?opener=ckeditor4&type=flash', 'string');
+$this->set('filebrowserBrowseUrl', 'media/browser/[+which_browser+]/browse.php?opener=ckeditor4&type=files', 'string');
+$this->set('filebrowserImageBrowseUrl', 'media/browser/[+which_browser+]/browse.php?opener=ckeditor4&type=images', 'string');
+$this->set('filebrowserFlashBrowseUrl', 'media/browser/[+which_browser+]/browse.php?opener=ckeditor4&type=flash', 'string');
 
 
 /*
